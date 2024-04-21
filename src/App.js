@@ -8,9 +8,10 @@ import Login from "./Components/Login";
 import ProtectedRoute from "./Components/ProtectedRoute";
 import NotFound from "./Components/NotFound";
 import { Suspense, lazy, useState } from "react";
-import Accordian from "./Components/Accordian";
+// import Accordian from "./Components/Accordian";
 
 const Teams = lazy(() => import("./Components/Teams"));
+const Accordian = lazy(() => import("./Components/Accordian"));
 function App() {
   const [lang, setLang] = useState("en");
   return (
@@ -19,11 +20,6 @@ function App() {
         <header className="text-2xl font-bold py-5 bg-black text-white text-center flex">
           Memes World!
           <nav className="p-2 m-2 w-96 justify-between text-lg">
-            {/* <a href="/">Home</a>
-          <a href="/about">About</a>
-          <a href="/teams">Teams</a>
-          <a href="/login">Login</a> */}
-
             <ul className="flex ">
               <li className="px-8">
                 <Link to="/">Home</Link>
@@ -69,9 +65,14 @@ function App() {
           ></Route>
 
           <Route path="/login" element={<Login />}></Route>
-          <Route path="/accordian" element={<Accordian />}>
-            Accordian
-          </Route>
+          <Route
+            path="/accordian"
+            element={
+              <Suspense fallback={() => <h1>Loading...</h1>}>
+                <Accordian />
+              </Suspense>
+            }
+          ></Route>
           <Route path="*" element={<NotFound />}></Route>
         </Routes>
       </BrowserRouter>
